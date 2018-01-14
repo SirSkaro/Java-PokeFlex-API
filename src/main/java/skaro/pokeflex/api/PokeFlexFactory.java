@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.nio.charset.Charset;
@@ -47,6 +48,38 @@ public class PokeFlexFactory
 			e.printStackTrace();
 			return Optional.empty();
 		}
+	}
+	
+	public List<Optional<?>> createFlexObjects(List<Endpoint> endpoints, List<List<String>> args) throws InterruptedException
+	{
+		if(endpoints.size() != args.size())
+			throw new IllegalArgumentException("List arguments must be of equal length");
+		
+		List<Thread> threads = new ArrayList<Thread>();
+		List<Optional<?>> result = new ArrayList<Optional<?>>();
+		for(int i = 0; i < endpoints.size(); i++)
+		{
+			int id = i;
+			Thread thread = (new Thread()
+				{
+					public void run()
+					{
+						Optional<?> flexObj = createFlexObject(endpoints.get(id), args.get(id));
+						synchronized(result)
+						{
+							result.add(flexObj);
+						}
+					}
+				});
+			
+			thread.start();
+			threads.add(thread);
+		}
+		
+		for(Thread thread : threads)
+			thread.join();
+		
+		return result;
 	}
 	
 	private Optional<URL> constructURL(String endpoint, List<String> args)
