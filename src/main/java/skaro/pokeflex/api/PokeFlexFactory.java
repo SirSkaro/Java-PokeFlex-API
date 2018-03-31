@@ -1,6 +1,7 @@
 package skaro.pokeflex.api;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -26,7 +27,7 @@ public class PokeFlexFactory
 		mapper = new ObjectMapper();
 	}
 	
-	public Optional<?> createFlexObject(Endpoint endpoint, List<String> args)
+	public Object createFlexObject(Endpoint endpoint, List<String> args) throws IOException, PokeFlexException
 	{
 		Optional<URL> url = constructURL(endpoint.getEnpoint(), args);
 		Class<?> wrapperClass = endpoint.getWrapperClass();
@@ -35,42 +36,42 @@ public class PokeFlexFactory
 		
 		
 		if(!url.isPresent())
-			return Optional.empty();
+			throw new PokeFlexException("Unable to create URL for request");
 		
-		try 
-		{
-			json = getJSONFromURL(url.get());
-			jsonPOJO = mapper.readValue(json, wrapperClass);
-			return Optional.of(wrapperClass.cast(jsonPOJO));
-		} 
-		catch(Exception e) 
-		{
-			e.printStackTrace();
-			return Optional.empty();
-		}
+		json = getJSONFromURL(url.get());
+		jsonPOJO = mapper.readValue(json, wrapperClass);
+		return Optional.of(wrapperClass.cast(jsonPOJO));
 	}
 	
-	public List<Optional<?>> createFlexObjects(List<Endpoint> endpoints, List<List<String>> args) throws InterruptedException
+	public Object createFlexObject(Request request) throws IOException, PokeFlexException
 	{
-		if(endpoints.size() != args.size())
+		return createFlexObject(request.getEndpoint(), request.getUrlParams());
+	}
+	
+	public List<Object> createFlexObjects(List<Endpoint> endpoints, List<List<String>> urlParamsList) throws InterruptedException, PokeFlexException
+	{
+		if(endpoints.size() != urlParamsList.size())
 			throw new IllegalArgumentException("List arguments must be of equal length");
 		
 		List<Thread> threads = new ArrayList<Thread>();
-		List<Optional<?>> result = new ArrayList<Optional<?>>();
+		List<Object> result = new ArrayList<Object>();
 		for(int i = 0; i < endpoints.size(); i++)
 		{
 			int id = i;
-			Thread thread = (new Thread()
+			Thread thread = new Thread()
 				{
 					public void run()
 					{
-						Optional<?> flexObj = createFlexObject(endpoints.get(id), args.get(id));
+						Object flexObj;
+						try  { flexObj = createFlexObject(endpoints.get(id), urlParamsList.get(id)); } 
+						catch (IOException | PokeFlexException e) { flexObj = null; }
+						
 						synchronized(result)
 						{
 							result.add(flexObj);
 						}
 					}
-				});
+				};
 			
 			thread.start();
 			threads.add(thread);
@@ -79,7 +80,25 @@ public class PokeFlexFactory
 		for(Thread thread : threads)
 			thread.join();
 		
+		for(Object obj : result)
+			if(obj == null)
+				throw new PokeFlexException("Could not fulfill all requests.");
+		
 		return result;
+	}
+	
+	public List<Object> createFlexObjects(List<Request> requests) throws InterruptedException, PokeFlexException
+	{
+		List<List<String>> urlParamsList = new ArrayList<List<String>>();
+		List<Endpoint> endpoints = new ArrayList<Endpoint>();
+		
+		for(Request req : requests)
+		{
+			urlParamsList.add(req.getUrlParams());
+			endpoints.add(req.getEndpoint());
+		}
+		
+		return createFlexObjects(endpoints, urlParamsList);
 	}
 	
 	private Optional<URL> constructURL(String endpoint, List<String> args)
@@ -108,14 +127,14 @@ public class PokeFlexFactory
 		} 
 		catch(MalformedURLException e) 
 		{
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			result = Optional.empty();
 		}
 		
 		return result;
 	}
 	
-	private String getJSONFromURL(URL url) throws Exception
+	private String getJSONFromURL(URL url) throws IOException
 	{
 		String htmlContent, jsonText;
 		
@@ -125,7 +144,7 @@ public class PokeFlexFactory
 		return jsonText;
 	}
 	
-	private String filterHTML(String htmlContent) throws Exception
+	private String filterHTML(String htmlContent)
 	{
 		String filteredContent = Jsoup.parse(htmlContent).text();
 		int jsonStartBracketIndex = filteredContent.indexOf("{");
@@ -134,7 +153,7 @@ public class PokeFlexFactory
 		return filteredContent.substring(jsonStartBracketIndex, jsonEndBracketIndex + 1); 
 	}
 	
-	private String readContentFromUrl(URL url) throws Exception
+	private String readContentFromUrl(URL url) throws IOException 
 	{
 		InputStream is = url.openStream();
 		try 
@@ -150,7 +169,7 @@ public class PokeFlexFactory
 		}
 	}
 	 
-	private String readBufferToString(Reader rd) throws Exception 
+	private String readBufferToString(Reader rd) throws IOException
 	{
 		StringBuilder sb = new StringBuilder();
 		int cp;
