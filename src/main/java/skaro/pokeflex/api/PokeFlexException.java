@@ -1,6 +1,6 @@
 package skaro.pokeflex.api;
 
-/* package private */ class PokeFlexException extends Exception
+public class PokeFlexException extends Exception
 {
 	private static final long serialVersionUID = 5501053852273757896L;
 
