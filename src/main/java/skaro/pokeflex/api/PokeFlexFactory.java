@@ -40,7 +40,7 @@ public class PokeFlexFactory
 		
 		json = getJSONFromURL(url.get());
 		jsonPOJO = mapper.readValue(json, wrapperClass);
-		return Optional.of(wrapperClass.cast(jsonPOJO));
+		return wrapperClass.cast(jsonPOJO);
 	}
 	
 	public Object createFlexObject(Request request) throws IOException, PokeFlexException
