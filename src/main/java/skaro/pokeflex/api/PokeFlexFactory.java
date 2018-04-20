@@ -34,7 +34,6 @@ public class PokeFlexFactory
 		Object jsonPOJO;
 		String json;
 		
-		
 		if(!url.isPresent())
 			throw new PokeFlexException("Unable to create URL for request");
 		

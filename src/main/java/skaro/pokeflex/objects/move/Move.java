@@ -102,6 +102,8 @@ public class Move {
     private int zPower;
     @JsonProperty("z_effect")
     private Object zEffect;
+    @JsonProperty("z_boost")
+    private Object zBoost;
     @JsonProperty("crystal")
     private Object crystal;
     @JsonProperty("flags")
@@ -387,6 +389,16 @@ public class Move {
     @JsonProperty("z_effect")
     public void setZEffect(Object zEffect) {
         this.zEffect = zEffect;
+    }
+    
+    @JsonProperty("z_boost")
+    public Object getZBoost() {
+        return zBoost;
+    }
+
+    @JsonProperty("z_boost")
+    public void setZBoost(Object zBoost) {
+        this.zBoost = zBoost;
     }
 
     @JsonProperty("crystal")

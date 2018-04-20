@@ -9,6 +9,7 @@ import skaro.pokeflex.objects.berry_flavor.BerryFlavor;
 import skaro.pokeflex.objects.contest_effect.ContestEffect;
 import skaro.pokeflex.objects.contest_type.ContestType;
 import skaro.pokeflex.objects.egg_group.EggGroup;
+import skaro.pokeflex.objects.encounter.Encounter;
 import skaro.pokeflex.objects.encounter_condition.EncounterCondition;
 import skaro.pokeflex.objects.encounter_condition_value.EncounterConditionValue;
 import skaro.pokeflex.objects.encounter_method.EncounterMethod;
@@ -47,6 +48,7 @@ public enum Endpoint
 	CONTEST_EFFECT(ContestEffect.class, "contest-effect"),
 	CONTEST_TYPE(ContestType.class, "contest-type"),
 	EGG_GROUP(EggGroup.class, "egg-group"),
+	ENCOUNTER(Encounter.class, "pokemon"),	//the last param should be "encounters"
 	ENCOUNTER_CONDITION(EncounterCondition.class, "encounter-condition"),
 	ENCOUNTER_CONDITION_VALUE(EncounterConditionValue.class, "encounter-condition-value"),
 	ENCOUNTER_METHOD(EncounterMethod.class, "encounter-method"),
