@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "url",
     "name"
 })
-public class Species__ {
+public class Location {
 
     @JsonProperty("url")
     private String url;

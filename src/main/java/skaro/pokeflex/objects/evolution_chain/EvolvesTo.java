@@ -23,11 +23,11 @@ public class EvolvesTo {
     @JsonProperty("evolution_details")
     private List<EvolutionDetail> evolutionDetails = null;
     @JsonProperty("evolves_to")
-    private List<EvolvesTo_> evolvesTo = null;
+    private List<EvolvesTo> evolvesTo = null;
     @JsonProperty("is_baby")
     private boolean isBaby;
     @JsonProperty("species")
-    private Species_ species;
+    private Species species;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -42,12 +42,12 @@ public class EvolvesTo {
     }
 
     @JsonProperty("evolves_to")
-    public List<EvolvesTo_> getEvolvesTo() {
+    public List<EvolvesTo> getEvolvesTo() {
         return evolvesTo;
     }
 
     @JsonProperty("evolves_to")
-    public void setEvolvesTo(List<EvolvesTo_> evolvesTo) {
+    public void setEvolvesTo(List<EvolvesTo> evolvesTo) {
         this.evolvesTo = evolvesTo;
     }
 
@@ -62,12 +62,12 @@ public class EvolvesTo {
     }
 
     @JsonProperty("species")
-    public Species_ getSpecies() {
+    public Species getSpecies() {
         return species;
     }
 
     @JsonProperty("species")
-    public void setSpecies(Species_ species) {
+    public void setSpecies(Species species) {
         this.species = species;
     }
 

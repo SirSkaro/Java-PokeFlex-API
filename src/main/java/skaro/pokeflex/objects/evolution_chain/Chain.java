@@ -21,23 +21,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class Chain {
 
     @JsonProperty("evolution_details")
-    private List<Object> evolutionDetails = null;
+    private List<EvolutionDetail> evolutionDetails = null;
     @JsonProperty("evolves_to")
     private List<EvolvesTo> evolvesTo = null;
     @JsonProperty("is_baby")
     private boolean isBaby;
     @JsonProperty("species")
-    private Species__ species;
+    private Species_ species;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("evolution_details")
-    public List<Object> getEvolutionDetails() {
+    public List<EvolutionDetail> getEvolutionDetails() {
         return evolutionDetails;
     }
 
     @JsonProperty("evolution_details")
-    public void setEvolutionDetails(List<Object> evolutionDetails) {
+    public void setEvolutionDetails(List<EvolutionDetail> evolutionDetails) {
         this.evolutionDetails = evolutionDetails;
     }
 
@@ -62,12 +62,12 @@ public class Chain {
     }
 
     @JsonProperty("species")
-    public Species__ getSpecies() {
+    public Species_ getSpecies() {
         return species;
     }
 
     @JsonProperty("species")
-    public void setSpecies(Species__ species) {
+    public void setSpecies(Species_ species) {
         this.species = species;
     }
 

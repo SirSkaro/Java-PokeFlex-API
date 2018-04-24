@@ -36,39 +36,39 @@ public class EvolutionDetail_ {
     @JsonProperty("min_level")
     private int minLevel;
     @JsonProperty("min_beauty")
-    private Object minBeauty;
+    private int minBeauty;
     @JsonProperty("time_of_day")
     private String timeOfDay;
     @JsonProperty("gender")
-    private Object gender;
+    private int gender;
     @JsonProperty("relative_physical_stats")
-    private Object relativePhysicalStats;
+    private int relativePhysicalStats;
     @JsonProperty("needs_overworld_rain")
     private boolean needsOverworldRain;
     @JsonProperty("turn_upside_down")
     private boolean turnUpsideDown;
     @JsonProperty("item")
-    private Object item;
+    private Item_ item;
     @JsonProperty("trigger")
     private Trigger_ trigger;
     @JsonProperty("known_move_type")
-    private Object knownMoveType;
+    private KnownMoveType_ knownMoveType;
     @JsonProperty("min_affection")
-    private Object minAffection;
+    private int minAffection;
     @JsonProperty("party_type")
-    private Object partyType;
+    private PartyType_ partyType;
     @JsonProperty("trade_species")
-    private Object tradeSpecies;
+    private TradeSpecies_ tradeSpecies;
     @JsonProperty("party_species")
-    private Object partySpecies;
+    private PartySpecies_ partySpecies;
     @JsonProperty("min_happiness")
-    private Object minHappiness;
+    private int minHappiness;
     @JsonProperty("held_item")
-    private Object heldItem;
+    private HeldItem_ heldItem;
     @JsonProperty("known_move")
-    private Object knownMove;
+    private KnownMove_ knownMove;
     @JsonProperty("location")
-    private Object location;
+    private Location_ location;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -83,12 +83,12 @@ public class EvolutionDetail_ {
     }
 
     @JsonProperty("min_beauty")
-    public Object getMinBeauty() {
+    public int getMinBeauty() {
         return minBeauty;
     }
 
     @JsonProperty("min_beauty")
-    public void setMinBeauty(Object minBeauty) {
+    public void setMinBeauty(int minBeauty) {
         this.minBeauty = minBeauty;
     }
 
@@ -103,22 +103,22 @@ public class EvolutionDetail_ {
     }
 
     @JsonProperty("gender")
-    public Object getGender() {
+    public int getGender() {
         return gender;
     }
 
     @JsonProperty("gender")
-    public void setGender(Object gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
     @JsonProperty("relative_physical_stats")
-    public Object getRelativePhysicalStats() {
+    public int getRelativePhysicalStats() {
         return relativePhysicalStats;
     }
 
     @JsonProperty("relative_physical_stats")
-    public void setRelativePhysicalStats(Object relativePhysicalStats) {
+    public void setRelativePhysicalStats(int relativePhysicalStats) {
         this.relativePhysicalStats = relativePhysicalStats;
     }
 
@@ -143,12 +143,12 @@ public class EvolutionDetail_ {
     }
 
     @JsonProperty("item")
-    public Object getItem() {
+    public Item_ getItem() {
         return item;
     }
 
     @JsonProperty("item")
-    public void setItem(Object item) {
+    public void setItem(Item_ item) {
         this.item = item;
     }
 
@@ -163,92 +163,92 @@ public class EvolutionDetail_ {
     }
 
     @JsonProperty("known_move_type")
-    public Object getKnownMoveType() {
+    public KnownMoveType_ getKnownMoveType() {
         return knownMoveType;
     }
 
     @JsonProperty("known_move_type")
-    public void setKnownMoveType(Object knownMoveType) {
+    public void setKnownMoveType(KnownMoveType_ knownMoveType) {
         this.knownMoveType = knownMoveType;
     }
 
     @JsonProperty("min_affection")
-    public Object getMinAffection() {
+    public int getMinAffection() {
         return minAffection;
     }
 
     @JsonProperty("min_affection")
-    public void setMinAffection(Object minAffection) {
+    public void setMinAffection(int minAffection) {
         this.minAffection = minAffection;
     }
 
     @JsonProperty("party_type")
-    public Object getPartyType() {
+    public PartyType_ getPartyType() {
         return partyType;
     }
 
     @JsonProperty("party_type")
-    public void setPartyType(Object partyType) {
+    public void setPartyType(PartyType_ partyType) {
         this.partyType = partyType;
     }
 
     @JsonProperty("trade_species")
-    public Object getTradeSpecies() {
+    public TradeSpecies_ getTradeSpecies() {
         return tradeSpecies;
     }
 
     @JsonProperty("trade_species")
-    public void setTradeSpecies(Object tradeSpecies) {
+    public void setTradeSpecies(TradeSpecies_ tradeSpecies) {
         this.tradeSpecies = tradeSpecies;
     }
 
     @JsonProperty("party_species")
-    public Object getPartySpecies() {
+    public PartySpecies_ getPartySpecies() {
         return partySpecies;
     }
 
     @JsonProperty("party_species")
-    public void setPartySpecies(Object partySpecies) {
+    public void setPartySpecies(PartySpecies_ partySpecies) {
         this.partySpecies = partySpecies;
     }
 
     @JsonProperty("min_happiness")
-    public Object getMinHappiness() {
+    public int getMinHappiness() {
         return minHappiness;
     }
 
     @JsonProperty("min_happiness")
-    public void setMinHappiness(Object minHappiness) {
+    public void setMinHappiness(int minHappiness) {
         this.minHappiness = minHappiness;
     }
 
     @JsonProperty("held_item")
-    public Object getHeldItem() {
+    public HeldItem_ getHeldItem() {
         return heldItem;
     }
 
     @JsonProperty("held_item")
-    public void setHeldItem(Object heldItem) {
+    public void setHeldItem(HeldItem_ heldItem) {
         this.heldItem = heldItem;
     }
 
     @JsonProperty("known_move")
-    public Object getKnownMove() {
+    public KnownMove_ getKnownMove() {
         return knownMove;
     }
 
     @JsonProperty("known_move")
-    public void setKnownMove(Object knownMove) {
+    public void setKnownMove(KnownMove_ knownMove) {
         this.knownMove = knownMove;
     }
 
     @JsonProperty("location")
-    public Object getLocation() {
+    public Location_ getLocation() {
         return location;
     }
 
     @JsonProperty("location")
-    public void setLocation(Object location) {
+    public void setLocation(Location_ location) {
         this.location = location;
     }
 
