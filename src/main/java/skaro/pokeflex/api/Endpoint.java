@@ -1,7 +1,5 @@
 package skaro.pokeflex.api;
 
-import skaro.pokeflex.objects.pokemon.Pokemon;
-import skaro.pokeflex.objects.pokemon_species.PokemonSpecies;
 import skaro.pokeflex.objects.ability.Ability;
 import skaro.pokeflex.objects.berry.Berry;
 import skaro.pokeflex.objects.berry_firmness.BerryFirmness;
@@ -25,16 +23,19 @@ import skaro.pokeflex.objects.location.Location;
 import skaro.pokeflex.objects.location_area.LocationArea;
 import skaro.pokeflex.objects.machine.Machine;
 import skaro.pokeflex.objects.move.Move;
+import skaro.pokeflex.objects.move_battle_style.MoveBattleStyle;
 import skaro.pokeflex.objects.move_category.MoveCategory;
 import skaro.pokeflex.objects.move_damage_class.MoveDamageClass;
 import skaro.pokeflex.objects.move_target.MoveTarget;
-import skaro.pokeflex.objects.move_battle_style.MoveBattleStyle;
 import skaro.pokeflex.objects.pokedex.Pokedex;
+import skaro.pokeflex.objects.pokemon.Pokemon;
 import skaro.pokeflex.objects.pokemon_color.PokemonColor;
 import skaro.pokeflex.objects.pokemon_form.PokemonForm;
 import skaro.pokeflex.objects.pokemon_habitat.PokemonHabitat;
 import skaro.pokeflex.objects.pokemon_shape.PokemonShape;
+import skaro.pokeflex.objects.pokemon_species.PokemonSpecies;
 import skaro.pokeflex.objects.region.Region;
+import skaro.pokeflex.objects.set.Set;
 import skaro.pokeflex.objects.stat.Stat;
 import skaro.pokeflex.objects.super_contest_effect.SuperContestEffect;
 import skaro.pokeflex.objects.type.Type;
@@ -76,6 +77,7 @@ public enum Endpoint
 	POKEMON_SHAPE(PokemonShape.class, "pokemon-shape"),
 	POKEMON_SPECIES(PokemonSpecies.class, "pokemon-species"),
 	REGION(Region.class, "region"),
+	SET(Set.class, "set"),
 	STAT(Stat.class, "stat"),
 	SUPER_CONTEST_EFFECT(SuperContestEffect.class, "super-contest-effect"),
 	TYPE(Type.class, "type"),
