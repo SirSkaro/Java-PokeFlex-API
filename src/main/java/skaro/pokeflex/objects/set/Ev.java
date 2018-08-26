@@ -7,37 +7,27 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "hp",
     "atk",
     "def",
-    "spatk",
-    "spdef",
-    "spd"
+    "hp",
+    "spa",
+    "spd",
+    "spe"
 })
-public class Evs {
+public class Ev {
 
-    @JsonProperty("hp")
-    private int hp;
     @JsonProperty("atk")
     private int atk;
     @JsonProperty("def")
     private int def;
-    @JsonProperty("spatk")
-    private int spatk;
-    @JsonProperty("spdef")
-    private int spdef;
+    @JsonProperty("hp")
+    private int hp;
+    @JsonProperty("spa")
+    private int spa;
     @JsonProperty("spd")
     private int spd;
-
-    @JsonProperty("hp")
-    public int getHp() {
-        return hp;
-    }
-
-    @JsonProperty("hp")
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
+    @JsonProperty("spe")
+    private int spe;
 
     @JsonProperty("atk")
     public int getAtk() {
@@ -59,24 +49,24 @@ public class Evs {
         this.def = def;
     }
 
-    @JsonProperty("spatk")
-    public int getSpatk() {
-        return spatk;
+    @JsonProperty("hp")
+    public int getHp() {
+        return hp;
     }
 
-    @JsonProperty("spatk")
-    public void setSpatk(int spatk) {
-        this.spatk = spatk;
+    @JsonProperty("hp")
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
-    @JsonProperty("spdef")
-    public int getSpdef() {
-        return spdef;
+    @JsonProperty("spa")
+    public int getSpa() {
+        return spa;
     }
 
-    @JsonProperty("spdef")
-    public void setSpdef(int spdef) {
-        this.spdef = spdef;
+    @JsonProperty("spa")
+    public void setSpa(int spa) {
+        this.spa = spa;
     }
 
     @JsonProperty("spd")
@@ -87,6 +77,16 @@ public class Evs {
     @JsonProperty("spd")
     public void setSpd(int spd) {
         this.spd = spd;
+    }
+
+    @JsonProperty("spe")
+    public int getSpe() {
+        return spe;
+    }
+
+    @JsonProperty("spe")
+    public void setSpe(int spe) {
+        this.spe = spe;
     }
 
 }

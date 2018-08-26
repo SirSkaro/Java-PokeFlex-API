@@ -12,99 +12,92 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "levels",
-    "descriptions",
-    "pokemon_species",
-    "formula",
-    "id"
-})
+@JsonPropertyOrder({ "name", "levels", "descriptions", "pokemon_species", "formula", "id" })
 public class GrowthRate {
 
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("levels")
-    private List<Level> levels = null;
-    @JsonProperty("descriptions")
-    private List<Description> descriptions = null;
-    @JsonProperty("pokemon_species")
-    private List<PokemonSpecy> pokemonSpecies = null;
-    @JsonProperty("formula")
-    private String formula;
-    @JsonProperty("id")
-    private int id;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	@JsonProperty("name")
+	private String name;
+	@JsonProperty("levels")
+	private List<Level> levels = null;
+	@JsonProperty("descriptions")
+	private List<Description> descriptions = null;
+	@JsonProperty("pokemon_species")
+	private List<PokemonSpecy> pokemonSpecies = null;
+	@JsonProperty("formula")
+	private String formula;
+	@JsonProperty("id")
+	private int id;
+	@JsonIgnore
+	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
+	@JsonProperty("name")
+	public String getName() {
+		return name;
+	}
 
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
-    }
+	@JsonProperty("name")
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @JsonProperty("levels")
-    public List<Level> getLevels() {
-        return levels;
-    }
+	@JsonProperty("levels")
+	public List<Level> getLevels() {
+		return levels;
+	}
 
-    @JsonProperty("levels")
-    public void setLevels(List<Level> levels) {
-        this.levels = levels;
-    }
+	@JsonProperty("levels")
+	public void setLevels(List<Level> levels) {
+		this.levels = levels;
+	}
 
-    @JsonProperty("descriptions")
-    public List<Description> getDescriptions() {
-        return descriptions;
-    }
+	@JsonProperty("descriptions")
+	public List<Description> getDescriptions() {
+		return descriptions;
+	}
 
-    @JsonProperty("descriptions")
-    public void setDescriptions(List<Description> descriptions) {
-        this.descriptions = descriptions;
-    }
+	@JsonProperty("descriptions")
+	public void setDescriptions(List<Description> descriptions) {
+		this.descriptions = descriptions;
+	}
 
-    @JsonProperty("pokemon_species")
-    public List<PokemonSpecy> getPokemonSpecies() {
-        return pokemonSpecies;
-    }
+	@JsonProperty("pokemon_species")
+	public List<PokemonSpecy> getPokemonSpecies() {
+		return pokemonSpecies;
+	}
 
-    @JsonProperty("pokemon_species")
-    public void setPokemonSpecies(List<PokemonSpecy> pokemonSpecies) {
-        this.pokemonSpecies = pokemonSpecies;
-    }
+	@JsonProperty("pokemon_species")
+	public void setPokemonSpecies(List<PokemonSpecy> pokemonSpecies) {
+		this.pokemonSpecies = pokemonSpecies;
+	}
 
-    @JsonProperty("formula")
-    public String getFormula() {
-        return formula;
-    }
+	@JsonProperty("formula")
+	public String getFormula() {
+		return formula;
+	}
 
-    @JsonProperty("formula")
-    public void setFormula(String formula) {
-        this.formula = formula;
-    }
+	@JsonProperty("formula")
+	public void setFormula(String formula) {
+		this.formula = formula;
+	}
 
-    @JsonProperty("id")
-    public int getId() {
-        return id;
-    }
+	@JsonProperty("id")
+	public int getId() {
+		return id;
+	}
 
-    @JsonProperty("id")
-    public void setId(int id) {
-        this.id = id;
-    }
+	@JsonProperty("id")
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
+	@JsonAnyGetter
+	public Map<String, Object> getAdditionalProperties() {
+		return this.additionalProperties;
+	}
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
+	@JsonAnySetter
+	public void setAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+	}
 
 }

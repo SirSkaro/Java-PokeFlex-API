@@ -9,23 +9,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "sets",
-    "gen",
-    "url",
-    "tier",
-    "name"
+    "url"
 })
 public class Set {
 
     @JsonProperty("sets")
     private List<Set_> sets = null;
-    @JsonProperty("gen")
-    private int gen;
     @JsonProperty("url")
     private String url;
-    @JsonProperty("tier")
-    private String tier;
-    @JsonProperty("name")
-    private String name;
 
     @JsonProperty("sets")
     public List<Set_> getSets() {
@@ -37,16 +28,6 @@ public class Set {
         this.sets = sets;
     }
 
-    @JsonProperty("gen")
-    public int getGen() {
-        return gen;
-    }
-
-    @JsonProperty("gen")
-    public void setGen(int gen) {
-        this.gen = gen;
-    }
-
     @JsonProperty("url")
     public String getUrl() {
         return url;
@@ -55,26 +36,6 @@ public class Set {
     @JsonProperty("url")
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    @JsonProperty("tier")
-    public String getTier() {
-        return tier;
-    }
-
-    @JsonProperty("tier")
-    public void setTier(String tier) {
-        this.tier = tier;
-    }
-
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
-
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
     }
 
 }
