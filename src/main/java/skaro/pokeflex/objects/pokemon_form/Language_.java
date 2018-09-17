@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "url",
     "name"
 })
-public class VersionGroup {
+public class Language_ {
 
     @JsonProperty("url")
     private String url;

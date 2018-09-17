@@ -27,9 +27,9 @@ public class PokeFlexFactory
 		mapper = new ObjectMapper();
 	}
 
-	public Object createFlexObject(Endpoint endpoint, List<String> args) throws IOException, PokeFlexException
+	public Object createFlexObject(Endpoint endpoint, List<String> params) throws IOException, PokeFlexException
 	{
-		Optional<URL> url = constructURL(endpoint.getEnpoint(), args);
+		Optional<URL> url = constructURL(endpoint.getEnpoint(), params);
 		Class<?> wrapperClass = endpoint.getWrapperClass();
 		Object jsonPOJO;
 		String json;
@@ -41,20 +41,28 @@ public class PokeFlexFactory
 		jsonPOJO = mapper.readValue(json, wrapperClass);
 		return wrapperClass.cast(jsonPOJO);
 	}
-
+	
+	public Object createFlexObject(String url, Endpoint endpoint) throws IOException, PokeFlexException
+	{
+		List<String> params = getURLParams(url, endpoint);
+		return createFlexObject(endpoint, params);
+	}
+	
 	public Object createFlexObject(Request request) throws IOException, PokeFlexException
 	{
 		return createFlexObject(request.getEndpoint(), request.getUrlParams());
 	}
-
-	public List<Object> createFlexObjects(List<Endpoint> endpoints, List<List<String>> urlParamsList) throws InterruptedException, PokeFlexException
+	
+	public Object createFlexObject(RequestURL request) throws IOException, PokeFlexException
 	{
-		if(endpoints.size() != urlParamsList.size())
-			throw new IllegalArgumentException("List arguments must be of equal length");
+		return createFlexObject(request.getURL(), request.getEndpoint());
+	}
 
+	public List<Object> createFlexObjects(List<PokeFlexRequest> requests) throws InterruptedException, PokeFlexException
+	{
 		List<Thread> threads = new ArrayList<Thread>();
 		List<Object> result = new ArrayList<Object>();
-		for(int i = 0; i < endpoints.size(); i++)
+		for(int i = 0; i < requests.size(); i++)
 		{
 			int id = i;
 			Thread thread = new Thread()
@@ -62,8 +70,15 @@ public class PokeFlexFactory
 				public void run()
 				{
 					Object flexObj;
-					try  { flexObj = createFlexObject(endpoints.get(id), urlParamsList.get(id)); } 
-					catch (IOException | PokeFlexException e) { flexObj = null; }
+					try 
+					{ 
+						if(requests.get(id) instanceof Request)
+							flexObj = createFlexObject((Request)requests.get(id)); 
+						else
+							flexObj = createFlexObject((RequestURL)requests.get(id)); 
+						
+					} 
+					catch (IOException | PokeFlexException e) { flexObj = null; e.printStackTrace();}
 
 					synchronized(result)
 					{
@@ -73,7 +88,7 @@ public class PokeFlexFactory
 			};
 
 			thread.start();
-			threads.add(thread);
+			threads.add(i,thread);
 		}
 
 		for(Thread thread : threads)
@@ -85,21 +100,7 @@ public class PokeFlexFactory
 
 		return result;
 	}
-
-	public List<Object> createFlexObjects(List<Request> requests) throws InterruptedException, PokeFlexException
-	{
-		List<List<String>> urlParamsList = new ArrayList<List<String>>();
-		List<Endpoint> endpoints = new ArrayList<Endpoint>();
-
-		for(Request req : requests)
-		{
-			urlParamsList.add(req.getUrlParams());
-			endpoints.add(req.getEndpoint());
-		}
-
-		return createFlexObjects(endpoints, urlParamsList);
-	}
-
+	
 	private Optional<URL> constructURL(String endpoint, List<String> args)
 	{
 		Optional<URL> result;
@@ -177,5 +178,26 @@ public class PokeFlexFactory
 			sb.append((char) cp);
 		}
 		return sb.toString();
+	}
+	
+	private List<String> getURLParams(String url, Endpoint endpoint)
+	{
+		List<String> result = new ArrayList<String>();
+		String[] elements = url.split("/");
+		int itr;
+		
+		for(itr = 0; itr < elements.length; itr++)
+		{
+			if(elements[itr].equals(endpoint.getEnpoint()))
+				break;
+		}
+		
+		if(elements.length <= (itr+1))
+			return result;			//no url parameters
+		
+		for(itr = itr + 1; itr < elements.length; itr++)
+			result.add(elements[itr]);
+		
+		return result;
 	}
 }

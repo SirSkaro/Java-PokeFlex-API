@@ -1,11 +1,6 @@
 
 package skaro.pokeflex.objects.pokemon_form;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -27,8 +22,6 @@ public class Sprites {
     private String frontShiny;
     @JsonProperty("back_shiny")
     private String backShiny;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("front_default")
     public String getFrontDefault() {
@@ -68,16 +61,6 @@ public class Sprites {
     @JsonProperty("back_shiny")
     public void setBackShiny(String backShiny) {
         this.backShiny = backShiny;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

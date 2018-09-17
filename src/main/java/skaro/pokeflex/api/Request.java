@@ -3,7 +3,7 @@ package skaro.pokeflex.api;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Request 
+public class Request implements PokeFlexRequest
 {
 	private Endpoint endpoint;
 	private List<String> urlParams;

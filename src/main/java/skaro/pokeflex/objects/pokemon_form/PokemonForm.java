@@ -1,12 +1,7 @@
 
 package skaro.pokeflex.objects.pokemon_form;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -40,13 +35,13 @@ public class PokemonForm {
     @JsonProperty("is_mega")
     private boolean isMega;
     @JsonProperty("form_names")
-    private List<Object> formNames = null;
+    private List<FormName> formNames = null;
     @JsonProperty("id")
     private int id;
     @JsonProperty("is_default")
     private boolean isDefault;
     @JsonProperty("names")
-    private List<Object> names = null;
+    private List<Name> names = null;
     @JsonProperty("form_name")
     private String formName;
     @JsonProperty("pokemon")
@@ -55,8 +50,6 @@ public class PokemonForm {
     private int order;
     @JsonProperty("name")
     private String name;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("is_battle_only")
     public boolean isIsBattleOnly() {
@@ -109,12 +102,12 @@ public class PokemonForm {
     }
 
     @JsonProperty("form_names")
-    public List<Object> getFormNames() {
+    public List<FormName> getFormNames() {
         return formNames;
     }
 
     @JsonProperty("form_names")
-    public void setFormNames(List<Object> formNames) {
+    public void setFormNames(List<FormName> formNames) {
         this.formNames = formNames;
     }
 
@@ -139,12 +132,12 @@ public class PokemonForm {
     }
 
     @JsonProperty("names")
-    public List<Object> getNames() {
+    public List<Name> getNames() {
         return names;
     }
 
     @JsonProperty("names")
-    public void setNames(List<Object> names) {
+    public void setNames(List<Name> names) {
         this.names = names;
     }
 
@@ -188,14 +181,15 @@ public class PokemonForm {
         this.name = name;
     }
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+    public String getFormInLanguage(String lang)
+    {
+    	for(FormName name : this.getFormNames())
+    	{
+    		if(name.getLanguage().getName().equals(lang))
+    			return name.getName();
+    	}
+    	
+    	return this.formName; //default English form
     }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
+    
 }

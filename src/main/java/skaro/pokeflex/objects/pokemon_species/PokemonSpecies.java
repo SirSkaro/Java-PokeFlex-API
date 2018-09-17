@@ -4,6 +4,7 @@ package skaro.pokeflex.objects.pokemon_species;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -329,6 +330,17 @@ public class PokemonSpecies {
 	@JsonAnySetter
 	public void setAdditionalProperty(String name, Object value) {
 		this.additionalProperties.put(name, value);
+	}
+	
+	public String getNameInLanguage(String lang)
+	{
+		for(Name nm : this.names)
+		{
+			if(nm.getLanguage().getName().equals(lang))
+				return nm.getName();
+		}
+		
+		return this.getName();	//Default to English
 	}
 
 }

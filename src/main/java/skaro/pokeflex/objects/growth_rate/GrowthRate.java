@@ -100,4 +100,14 @@ public class GrowthRate {
 		this.additionalProperties.put(name, value);
 	}
 
+	public String getNameInLanguage(String lang)
+	{
+		for(Description desc : this.getDescriptions())
+		{
+			if(desc.getLanguage().getName().equals(lang))
+				return desc.getDescription();
+		}
+		
+		return this.getName(); //Default to English
+	}
 }
