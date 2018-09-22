@@ -39,6 +39,7 @@ import skaro.pokeflex.objects.set.Set;
 import skaro.pokeflex.objects.stat.Stat;
 import skaro.pokeflex.objects.super_contest_effect.SuperContestEffect;
 import skaro.pokeflex.objects.type.Type;
+import skaro.pokeflex.objects.version.Version;
 
 public enum Endpoint 
 {
@@ -81,6 +82,7 @@ public enum Endpoint
 	STAT(Stat.class, "stat"),
 	SUPER_CONTEST_EFFECT(SuperContestEffect.class, "super-contest-effect"),
 	TYPE(Type.class, "type"),
+	VERSION(Version.class, "version"),
 	;
 	
 	private String endpoint;

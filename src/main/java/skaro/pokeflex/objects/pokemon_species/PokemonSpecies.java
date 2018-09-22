@@ -4,6 +4,7 @@ package skaro.pokeflex.objects.pokemon_species;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -342,5 +343,25 @@ public class PokemonSpecies {
 		
 		return this.getName();	//Default to English
 	}
+	
+	public String getGeneraInLanguage(String lang)
+	{
+		for(Name nm : this.names)
+		{
+			if(nm.getLanguage().getName().equals(lang))
+				return nm.getName();
+		}
+		
+		return this.getName();	//Default to English
+	}
+	
+    public Optional<String> getFlavorTextEntry(String lang, String version)
+    {
+    	for(FlavorTextEntry entry : flavorTextEntries)
+			if(entry.getLanguage().getName().equals(lang) && entry.getVersion().getName().equals(version))
+				return Optional.of(entry.getFlavorText());
+    	
+    	return Optional.empty();
+    }
 
 }

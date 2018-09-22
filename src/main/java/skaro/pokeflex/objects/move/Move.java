@@ -4,6 +4,8 @@ package skaro.pokeflex.objects.move;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -429,6 +431,27 @@ public class Move {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
+    }
+    
+    public Optional<String> getFlavorTextEntry(String lang, String version)
+    {
+    	String secondBest = null;
+    	String backup = null;
+    	
+    	for(FlavorTextEntry entry : flavorTextEntries)
+    	{
+			if(entry.getLanguage().getName().equals(lang) && entry.getVersionGroup().getName().equals(version))
+				return Optional.of(entry.getFlavorText());
+			else if(entry.getLanguage().getName().equals(lang))
+				secondBest = entry.getFlavorText();
+			else if(entry.getLanguage().getName().equals("en"))
+				backup = entry.getFlavorText();
+    	}
+    	
+    	if(secondBest != null)
+    		return Optional.of(secondBest);
+    	
+    	return Optional.ofNullable(backup);
     }
 
 }
