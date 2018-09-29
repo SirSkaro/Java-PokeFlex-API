@@ -275,5 +275,23 @@ public class Pokemon {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+    
+    public int getStat(String statName)
+    {
+    	for(Stat stat : this.stats)
+    		if(stat.getStat().getName().equals(statName))
+    			return stat.getBaseStat();
+    	
+    	return -1;
+    }
+    
+    public int getEffotStat(String statName)
+    {
+    	for(Stat stat : this.stats)
+    		if(stat.getStat().getName().equals(statName))
+    			return stat.getEffort();
+    	
+    	return -1;
+    }
 
 }

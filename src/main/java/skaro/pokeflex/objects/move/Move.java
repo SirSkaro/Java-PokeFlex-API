@@ -44,7 +44,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "z_power",
     "z_effect",
     "crystal",
-    "flags"
+    "flags",
+    "images"
 })
 public class Move {
 
@@ -110,9 +111,21 @@ public class Move {
     private Object crystal;
     @JsonProperty("flags")
     private List<String> flags = null;
+    @JsonProperty("images")
+    private List<Image> images = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
+    @JsonProperty("images")
+    public List<Image> getImages() {
+        return images;
+    }
+    
+    @JsonProperty("images")
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+    
     @JsonProperty("effect_chance")
     public int getEffectChance() {
         return effectChance;
@@ -452,6 +465,26 @@ public class Move {
     		return Optional.of(secondBest);
     	
     	return Optional.ofNullable(backup);
+    }
+    
+	public String getNameInLanguage(String lang)
+	{
+		for(Name nm : this.names)
+		{
+			if(nm.getLanguage().getName().equals(lang))
+				return nm.getName();
+		}
+		
+		return this.getName();	//Default to English
+	}
+    
+    public Optional<Image> getImage(String lang, int gen)
+    {
+    	for(Image image : this.images)
+    		if(image.getGeneration() == gen && image.getLanguage().equals(lang))
+    			return Optional.of(image);
+    	
+    	return Optional.empty();
     }
 
 }

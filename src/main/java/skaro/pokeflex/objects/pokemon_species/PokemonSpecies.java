@@ -346,13 +346,19 @@ public class PokemonSpecies {
 	
 	public String getGeneraInLanguage(String lang)
 	{
-		for(Name nm : this.names)
+		for(Genera genera : this.getGenera())
 		{
-			if(nm.getLanguage().getName().equals(lang))
-				return nm.getName();
+			if(genera.getLanguage().getName().equals(lang))
+				return genera.getGenus();
 		}
 		
-		return this.getName();	//Default to English
+		for(Genera genera : this.getGenera())		//default to English
+		{
+			if(genera.getLanguage().getName().equals("en"))
+				return genera.getGenus();
+		}
+		
+		return null;
 	}
 	
     public Optional<String> getFlavorTextEntry(String lang, String version)
