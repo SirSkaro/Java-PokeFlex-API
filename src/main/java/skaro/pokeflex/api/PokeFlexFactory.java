@@ -7,10 +7,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.nio.charset.Charset;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.jsoup.Jsoup;
 
@@ -20,11 +25,20 @@ public class PokeFlexFactory
 {
 	private String baseURI;
 	private ObjectMapper mapper;
+	private ExecutorService threadPool;
 
 	public PokeFlexFactory(String base)
 	{
 		baseURI = base;
 		mapper = new ObjectMapper();
+		threadPool = Executors.newFixedThreadPool(8);
+	}
+	
+	public PokeFlexFactory(String base, ExecutorService customExecutor)
+	{
+		baseURI = base;
+		mapper = new ObjectMapper();
+		threadPool = customExecutor;
 	}
 
 	public Object createFlexObject(Endpoint endpoint, List<String> params) throws IOException, PokeFlexException
@@ -60,44 +74,42 @@ public class PokeFlexFactory
 
 	public List<Object> createFlexObjects(List<PokeFlexRequest> requests) throws InterruptedException, PokeFlexException
 	{
-		List<Thread> threads = new ArrayList<Thread>();
 		List<Object> result = new ArrayList<Object>();
-		for(int i = 0; i < requests.size(); i++)
+		List<Future<Object>> flexResults = new ArrayList<Future<Object>>();
+		Future<Object> requestResult;
+		
+		for(PokeFlexRequest request : requests)
 		{
-			int id = i;
-			Thread thread = new Thread()
+			requestResult = threadPool.submit(new Callable<Object>()
 			{
-				public void run()
+				Object flexObj;
+				@Override
+				public Object call() throws Exception 
 				{
-					Object flexObj;
-					try 
-					{ 
-						if(requests.get(id) instanceof Request)
-							flexObj = createFlexObject((Request)requests.get(id)); 
-						else
-							flexObj = createFlexObject((RequestURL)requests.get(id)); 
-						
-					} 
-					catch (IOException | PokeFlexException e) { flexObj = null; e.printStackTrace();}
-
-					synchronized(result)
-					{
-						result.add(flexObj);
-					}
+					if(request instanceof Request)
+						flexObj = createFlexObject((Request)request); 
+					else
+						flexObj = createFlexObject((RequestURL)request); 
+					
+					return flexObj;
 				}
-			};
-
-			thread.start();
-			threads.add(i,thread);
+			});
+			
+			flexResults.add(requestResult);
 		}
-
-		for(Thread thread : threads)
-			thread.join();
-
-		for(Object obj : result)
-			if(obj == null)
+		
+		for(Future<Object> flexObj : flexResults)
+		{
+			try 
+			{
+				result.add(flexObj.get());
+			} 
+			catch (ExecutionException e) 
+			{
 				throw new PokeFlexException("Could not fulfill all requests.");
-
+			}
+		}
+		
 		return result;
 	}
 	
