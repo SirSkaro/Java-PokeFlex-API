@@ -81,18 +81,8 @@ public class PokeFlexFactory
 		for(PokeFlexRequest request : requests)
 		{
 			requestResult = threadPool.submit(new Callable<Object>()
-			{
-				Object flexObj;
-				@Override
-				public Object call() throws Exception 
-				{
-					if(request instanceof Request)
-						flexObj = createFlexObject((Request)request); 
-					else
-						flexObj = createFlexObject((RequestURL)request); 
-					
-					return flexObj;
-				}
+			{	@Override
+				public Object call() throws Exception { return request.makeRequest(PokeFlexFactory.this);}
 			});
 			
 			flexResults.add(requestResult);
@@ -100,14 +90,8 @@ public class PokeFlexFactory
 		
 		for(Future<Object> flexObj : flexResults)
 		{
-			try 
-			{
-				result.add(flexObj.get());
-			} 
-			catch (ExecutionException e) 
-			{
-				throw new PokeFlexException("Could not fulfill all requests.");
-			}
+			try { result.add(flexObj.get()); } 
+			catch (ExecutionException e) { throw new PokeFlexException("Could not fulfill all requests."); }
 		}
 		
 		return result;

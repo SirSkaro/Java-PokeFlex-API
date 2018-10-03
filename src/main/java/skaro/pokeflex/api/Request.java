@@ -1,5 +1,6 @@
 package skaro.pokeflex.api;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,4 +28,10 @@ public class Request implements PokeFlexRequest
 
 	public Endpoint getEndpoint() { return endpoint; }
 	public List<String> getUrlParams() { return urlParams; }
+
+	@Override
+	public Object makeRequest(PokeFlexFactory factory) throws IOException, PokeFlexException
+	{
+		return factory.createFlexObject(this);
+	}
 }
