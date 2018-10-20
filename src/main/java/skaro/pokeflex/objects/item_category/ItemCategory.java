@@ -94,4 +94,15 @@ public class ItemCategory {
         this.additionalProperties.put(name, value);
     }
 
+	public String getNameInLanguage(String lang)
+	{
+		for(Name nm : this.names)
+		{
+			if(nm.getLanguage().getName().equals(lang))
+				return nm.getName();
+		}
+		
+		return this.getName();	//Default to English
+	}
+    
 }

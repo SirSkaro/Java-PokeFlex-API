@@ -4,6 +4,8 @@ package skaro.pokeflex.objects.item;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -71,9 +73,9 @@ public class Item {
     @JsonProperty("sdesc")
     private String sdesc;
     @JsonProperty("ng_type")
-    private Object ngType;
+    private String ngType;
     @JsonProperty("ng_power")
-    private Object ngPower;
+    private int ngPower;
     @JsonProperty("debut")
     private int debut;
     @JsonIgnore
@@ -250,22 +252,22 @@ public class Item {
     }
 
     @JsonProperty("ng_type")
-    public Object getNgType() {
+    public String getNgType() {
         return ngType;
     }
 
     @JsonProperty("ng_type")
-    public void setNgType(Object ngType) {
+    public void setNgType(String ngType) {
         this.ngType = ngType;
     }
 
     @JsonProperty("ng_power")
-    public Object getNgPower() {
+    public int getNgPower() {
         return ngPower;
     }
 
     @JsonProperty("ng_power")
-    public void setNgPower(Object ngPower) {
+    public void setNgPower(int ngPower) {
         this.ngPower = ngPower;
     }
 
@@ -287,6 +289,38 @@ public class Item {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
+    }
+    
+	public String getNameInLanguage(String lang)
+	{
+		for(Name nm : this.names)
+		{
+			if(nm.getLanguage().getName().equals(lang))
+				return nm.getName();
+		}
+		
+		return this.getName();	//Default to English
+	}
+	
+    public Optional<String> getFlavorTextEntry(String lang, String version)
+    {
+    	String secondBest = null;
+    	String backup = null;
+    	
+    	for(FlavorTextEntry entry : flavorTextEntries)
+    	{
+			if(entry.getLanguage().getName().equals(lang) && entry.getVersionGroup().getName().equals(version))
+				return Optional.of(entry.getText());
+			else if(entry.getLanguage().getName().equals(lang))
+				secondBest = entry.getText();
+			else if(entry.getLanguage().getName().equals("en"))
+				backup = entry.getText();
+    	}
+    	
+    	if(secondBest != null)
+    		return Optional.of(secondBest);
+    	
+    	return Optional.ofNullable(backup);
     }
 
 }
