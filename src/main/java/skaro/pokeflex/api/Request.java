@@ -15,6 +15,13 @@ public class Request implements PokeFlexRequest
 		urlParams = params;
 	}
 	
+	public Request(Endpoint ep, String param)
+	{
+		endpoint = ep;
+		urlParams = new ArrayList<String>();
+		urlParams.add(param);
+	}
+	
 	public Request(Endpoint ep)
 	{
 		endpoint = ep;
