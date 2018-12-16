@@ -26,6 +26,7 @@ import skaro.pokeflex.objects.move.Move;
 import skaro.pokeflex.objects.move_battle_style.MoveBattleStyle;
 import skaro.pokeflex.objects.move_category.MoveCategory;
 import skaro.pokeflex.objects.move_damage_class.MoveDamageClass;
+import skaro.pokeflex.objects.move_learn_method.MoveLearnMethod;
 import skaro.pokeflex.objects.move_target.MoveTarget;
 import skaro.pokeflex.objects.pokedex.Pokedex;
 import skaro.pokeflex.objects.pokemon.Pokemon;
@@ -69,6 +70,7 @@ public enum Endpoint
 	MOVE_BATTLE_STYLE(MoveBattleStyle.class, "move-battle-style"),
 	MOVE_CATEGORY(MoveCategory.class, "move-category"),
 	MOVE_DAMAGE_CLASS(MoveDamageClass.class, "move-damage-class"),
+	MOVE_LEARN_METHOD(MoveLearnMethod.class, "move-learn-method"),
 	MOVE_TARGET(MoveTarget.class, "move-target"),
 	POKEDEX(Pokedex.class, "pokedex"),
 	POKEMON(Pokemon.class, "pokemon"),
