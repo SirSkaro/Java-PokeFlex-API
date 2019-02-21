@@ -1,9 +1,9 @@
 package skaro.pokeflex.api;
 
-import java.io.IOException;
+import reactor.core.publisher.Mono;
 
 public interface PokeFlexRequest
 {
 	public Endpoint getEndpoint();
-	public Object makeRequest(PokeFlexFactory factory) throws IOException, PokeFlexException;
+	public Mono<IFlexObject> makeRequest(PokeFlexFactory factory);
 }

@@ -11,10 +11,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import skaro.pokeflex.api.IFlexObject;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "name", "generation", "damage_relations", "game_indices", "move_damage_class", "moves", "pokemon",
 		"id", "names" })
-public class Type {
+public class Type implements IFlexObject {
 
 	@JsonProperty("name")
 	private String name;

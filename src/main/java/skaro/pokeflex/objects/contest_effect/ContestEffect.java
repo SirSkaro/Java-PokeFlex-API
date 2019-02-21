@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import skaro.pokeflex.api.IFlexObject;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "effect_entries",
@@ -19,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "flavor_text_entries",
     "id"
 })
-public class ContestEffect {
+public class ContestEffect implements IFlexObject {
 
     @JsonProperty("effect_entries")
     private List<EffectEntry> effectEntries = null;

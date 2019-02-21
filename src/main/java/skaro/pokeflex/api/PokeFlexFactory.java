@@ -11,90 +11,72 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.jsoup.Jsoup;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import reactor.core.Exceptions;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+
 public class PokeFlexFactory 
 {
 	private String baseURI;
 	private ObjectMapper mapper;
-	private ExecutorService threadPool;
 
 	public PokeFlexFactory(String base)
 	{
 		baseURI = base;
 		mapper = new ObjectMapper();
-		threadPool = Executors.newFixedThreadPool(8);
-	}
-	
-	public PokeFlexFactory(String base, ExecutorService customExecutor)
-	{
-		baseURI = base;
-		mapper = new ObjectMapper();
-		threadPool = customExecutor;
 	}
 
-	public Object createFlexObject(Endpoint endpoint, List<String> params) throws IOException, PokeFlexException
+	public Mono<IFlexObject> createFlexObject(Endpoint endpoint, List<String> params) 
 	{
-		Optional<URL> url = constructURL(endpoint.getEnpoint(), params);
 		Class<?> wrapperClass = endpoint.getWrapperClass();
-		Object jsonPOJO;
-		String json;
 
-		if(!url.isPresent())
-			throw new PokeFlexException("Unable to create URL for request");
-
-		json = getJSONFromURL(url.get());
-		jsonPOJO = mapper.readValue(json, wrapperClass);
-		return wrapperClass.cast(jsonPOJO);
+		return Mono.justOrEmpty(constructURL(endpoint.getEnpoint(), params))
+			.map(url -> {
+				try { return getJSONFromURL(url); }
+				catch (IOException e) { throw Exceptions.propagate(e); }
+			})
+			.map(json -> {
+				try { return mapper.readValue(json, wrapperClass); }
+				catch (IOException e) { throw Exceptions.propagate(e); }
+			})
+			.map(jsonPOJO -> (IFlexObject)jsonPOJO);
 	}
 	
-	public Object createFlexObject(String url, Endpoint endpoint) throws IOException, PokeFlexException
+	public Mono<IFlexObject> createFlexObject(String url, Endpoint endpoint) 
 	{
 		List<String> params = getURLParams(url, endpoint);
 		return createFlexObject(endpoint, params);
 	}
 	
-	public Object createFlexObject(Request request) throws IOException, PokeFlexException
+	public Mono<IFlexObject> createFlexObject(Request request) 
 	{
 		return createFlexObject(request.getEndpoint(), request.getUrlParams());
 	}
 	
-	public Object createFlexObject(RequestURL request) throws IOException, PokeFlexException
+	public Mono<IFlexObject> createFlexObject(RequestURL request) 
 	{
 		return createFlexObject(request.getURL(), request.getEndpoint());
 	}
 
-	public List<Object> createFlexObjects(List<PokeFlexRequest> requests) throws InterruptedException, PokeFlexException
+	public Flux<IFlexObject> createFlexObjects(List<PokeFlexRequest> requests) 
 	{
-		List<Object> result = new ArrayList<Object>();
-		List<Future<Object>> flexResults = new ArrayList<Future<Object>>();
-		Future<Object> requestResult;
-		
-		for(PokeFlexRequest request : requests)
-		{
-			requestResult = threadPool.submit(new Callable<Object>()
-			{	@Override
-				public Object call() throws Exception { return request.makeRequest(PokeFlexFactory.this);}
-			});
-			
-			flexResults.add(requestResult);
-		}
-		
-		for(Future<Object> flexObj : flexResults)
-		{
-			try { result.add(flexObj.get()); } 
-			catch (ExecutionException e) { throw new PokeFlexException("Could not fulfill all requests."); }
-		}
-		
-		return result;
+		return Flux.fromIterable(requests)
+				.flatMap(request -> request.makeRequest(PokeFlexFactory.this));
+	}
+	
+	public Flux<IFlexObject> createFlexObjects(List<PokeFlexRequest> requests, Scheduler scheduler) 
+	{
+		return Flux.fromIterable(requests)
+				.parallel()
+				.runOn(scheduler)
+				.flatMap(request -> request.makeRequest(PokeFlexFactory.this))
+				.sequential();
 	}
 	
 	private Optional<URL> constructURL(String endpoint, List<String> args)

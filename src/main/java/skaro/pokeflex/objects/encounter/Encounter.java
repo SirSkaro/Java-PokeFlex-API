@@ -11,11 +11,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import skaro.pokeflex.api.IFlexObject;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "encounter_potential"
 })
-public class Encounter {
+public class Encounter implements IFlexObject{
 
     @JsonProperty("encounter_potential")
     private List<EncounterPotential> encounterPotential = null;

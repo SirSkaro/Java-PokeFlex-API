@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import skaro.pokeflex.api.IFlexObject;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "item",
@@ -17,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "id",
     "version_group"
 })
-public class Machine {
+public class Machine implements IFlexObject {
 
     @JsonProperty("item")
     private Item item;

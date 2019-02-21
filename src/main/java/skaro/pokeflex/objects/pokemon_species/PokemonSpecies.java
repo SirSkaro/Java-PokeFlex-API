@@ -13,12 +13,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import skaro.pokeflex.api.IFlexObject;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "capture_rate", "habitat", "color", "forms_switchable", "shape", "names", "id", "egg_groups",
 		"base_happiness", "generation", "flavor_text_entries", "growth_rate", "hatch_counter", "genera",
 		"evolves_from_species", "form_descriptions", "varieties", "name", "evolution_chain", "has_gender_differences",
 		"is_baby", "gender_rate", "pal_park_encounters", "order", "pokedex_numbers" })
-public class PokemonSpecies {
+public class PokemonSpecies implements IFlexObject {
 
 	@JsonProperty("capture_rate")
 	private int captureRate;

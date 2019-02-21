@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "url",
     "name"
 })
-public class HalfDamageTo {
+public class HalfDamageTo implements IDamageRelation {
 
     @JsonProperty("url")
     private String url;

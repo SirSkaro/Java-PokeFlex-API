@@ -1,6 +1,6 @@
 package skaro.pokeflex.api;
 
-import java.io.IOException;
+import reactor.core.publisher.Mono;
 
 public class RequestURL implements PokeFlexRequest
 {
@@ -13,11 +13,12 @@ public class RequestURL implements PokeFlexRequest
 		this.endpoint = endpoint;
 	}
 	
-	public String getURL() { return url; }
+	@Override
 	public Endpoint getEndpoint() { return endpoint; }
+	public String getURL() { return url; }
 	
 	@Override
-	public Object makeRequest(PokeFlexFactory factory) throws IOException, PokeFlexException
+	public Mono<IFlexObject> makeRequest(PokeFlexFactory factory)
 	{
 		return factory.createFlexObject(this);
 	}

@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import skaro.pokeflex.api.IFlexObject;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "moves",
@@ -18,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "flavor_text_entries",
     "id"
 })
-public class SuperContestEffect {
+public class SuperContestEffect implements IFlexObject {
 
     @JsonProperty("moves")
     private List<Move> moves = null;

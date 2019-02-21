@@ -90,9 +90,12 @@ public enum Endpoint
 	private String endpoint;
 	private Class<?> wrapper;
 	
-	Endpoint(Class<?> w, String ep)
+	Endpoint(Class<?> wrap, String ep) throws ExceptionInInitializerError
 	{
-		wrapper = w;
+		if(!IFlexObject.class.isAssignableFrom(wrap))
+			throw new ExceptionInInitializerError();
+		
+		wrapper = wrap;
 		endpoint = ep;
 	}
 	

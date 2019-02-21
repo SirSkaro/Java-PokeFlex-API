@@ -4,6 +4,7 @@ package skaro.pokeflex.objects.type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class DamageRelations {
 
     @JsonProperty("half_damage_from")
-    private List<Object> halfDamageFrom = null;
+    private List<HalfDamageFrom> halfDamageFrom = null;
     @JsonProperty("no_damage_from")
     private List<NoDamageFrom> noDamageFrom = null;
     @JsonProperty("half_damage_to")
@@ -33,17 +34,17 @@ public class DamageRelations {
     @JsonProperty("no_damage_to")
     private List<NoDamageTo> noDamageTo = null;
     @JsonProperty("double_damage_to")
-    private List<Object> doubleDamageTo = null;
+    private List<DoubleDamageTo> doubleDamageTo = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("half_damage_from")
-    public List<Object> getHalfDamageFrom() {
+    public List<HalfDamageFrom> getHalfDamageFrom() {
         return halfDamageFrom;
     }
 
     @JsonProperty("half_damage_from")
-    public void setHalfDamageFrom(List<Object> halfDamageFrom) {
+    public void setHalfDamageFrom(List<HalfDamageFrom> halfDamageFrom) {
         this.halfDamageFrom = halfDamageFrom;
     }
 
@@ -88,12 +89,12 @@ public class DamageRelations {
     }
 
     @JsonProperty("double_damage_to")
-    public List<Object> getDoubleDamageTo() {
+    public List<DoubleDamageTo> getDoubleDamageTo() {
         return doubleDamageTo;
     }
 
     @JsonProperty("double_damage_to")
-    public void setDoubleDamageTo(List<Object> doubleDamageTo) {
+    public void setDoubleDamageTo(List<DoubleDamageTo> doubleDamageTo) {
         this.doubleDamageTo = doubleDamageTo;
     }
 
@@ -106,5 +107,42 @@ public class DamageRelations {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+    
+    public boolean takesHalfDamageFrom(Type type)
+    {
+    	return isInDamageRelation(halfDamageFrom, type);
+    }
+    
+    public boolean causesHalfDamageTo(Type type)
+    {
+    	return isInDamageRelation(halfDamageTo, type);
+    }
 
+    public boolean takesNoDamageFrom(Type type)
+    {
+    	return isInDamageRelation(noDamageFrom, type);
+    }
+    
+    public boolean causesNoDamageTo(Type type)
+    {
+    	return isInDamageRelation(noDamageTo, type);
+    }
+    
+    public boolean takesDoubleDamageFrom(Type type)
+    {
+    	return isInDamageRelation(doubleDamageFrom, type);
+    }
+    
+    public boolean causesDoubleDamageTo(Type type)
+    {
+    	return isInDamageRelation(doubleDamageTo, type);
+    }
+    
+    private boolean isInDamageRelation(List<? extends IDamageRelation> damageRelations, Type type)
+    {
+    	for(IDamageRelation relation : damageRelations)
+    		if(relation.getName().equals(type.getName()))
+    			return true;
+    	return false;
+    }
 }

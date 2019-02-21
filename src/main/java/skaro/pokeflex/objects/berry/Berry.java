@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import skaro.pokeflex.api.IFlexObject;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "natural_gift_power",
@@ -26,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "id",
     "size"
 })
-public class Berry {
+public class Berry implements IFlexObject {
 
     @JsonProperty("natural_gift_power")
     private int naturalGiftPower;

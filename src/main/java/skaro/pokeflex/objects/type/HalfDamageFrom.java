@@ -1,8 +1,7 @@
 
-package skaro.pokeflex.objects.pokemon_color;
+package skaro.pokeflex.objects.type;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -11,56 +10,28 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import skaro.pokeflex.api.IFlexObject;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "pokemon_species",
-    "names",
-    "id",
+    "url",
     "name"
 })
-public class PokemonColor implements IFlexObject {
+public class HalfDamageFrom implements IDamageRelation{
 
-    @JsonProperty("pokemon_species")
-    private List<PokemonSpecy> pokemonSpecies = null;
-    @JsonProperty("names")
-    private List<Name> names = null;
-    @JsonProperty("id")
-    private int id;
+    @JsonProperty("url")
+    private String url;
     @JsonProperty("name")
     private String name;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("pokemon_species")
-    public List<PokemonSpecy> getPokemonSpecies() {
-        return pokemonSpecies;
+    @JsonProperty("url")
+    public String getUrl() {
+        return url;
     }
 
-    @JsonProperty("pokemon_species")
-    public void setPokemonSpecies(List<PokemonSpecy> pokemonSpecies) {
-        this.pokemonSpecies = pokemonSpecies;
-    }
-
-    @JsonProperty("names")
-    public List<Name> getNames() {
-        return names;
-    }
-
-    @JsonProperty("names")
-    public void setNames(List<Name> names) {
-        this.names = names;
-    }
-
-    @JsonProperty("id")
-    public int getId() {
-        return id;
-    }
-
-    @JsonProperty("id")
-    public void setId(int id) {
-        this.id = id;
+    @JsonProperty("url")
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @JsonProperty("name")

@@ -10,13 +10,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import skaro.pokeflex.api.IFlexObject;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "baby_trigger_item",
     "id",
     "chain"
 })
-public class EvolutionChain {
+public class EvolutionChain implements IFlexObject {
 
     @JsonProperty("baby_trigger_item")
     private Object babyTriggerItem;

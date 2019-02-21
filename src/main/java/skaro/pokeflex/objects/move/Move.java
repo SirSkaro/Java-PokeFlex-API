@@ -13,6 +13,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import skaro.pokeflex.api.IFlexObject;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "effect_chance",
@@ -47,7 +49,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "flags",
     "images"
 })
-public class Move {
+public class Move implements IFlexObject {
 
     @JsonProperty("effect_chance")
     private int effectChance;
