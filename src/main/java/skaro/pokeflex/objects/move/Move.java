@@ -47,7 +47,8 @@ import skaro.pokeflex.api.IFlexObject;
     "z_effect",
     "crystal",
     "flags",
-    "images"
+    "images",
+    "pokemon"
 })
 public class Move implements IFlexObject {
 
@@ -110,14 +111,26 @@ public class Move implements IFlexObject {
     @JsonProperty("z_boost")
     private Object zBoost;
     @JsonProperty("crystal")
-    private Object crystal;
+    private String crystal;
     @JsonProperty("flags")
     private List<String> flags = null;
     @JsonProperty("images")
     private List<Image> images = null;
+    @JsonProperty("pokemon")
+    private List<String> pokemon = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
+    @JsonProperty("pokemon")
+    public List<String> getPokemon() {
+        return pokemon;
+    }
+    
+    @JsonProperty("pokemon")
+    public void setPokemon(List<String> pokemon) {
+        this.pokemon = pokemon;
+    }
+    
     @JsonProperty("images")
     public List<Image> getImages() {
         return images;
@@ -419,12 +432,12 @@ public class Move implements IFlexObject {
     }
 
     @JsonProperty("crystal")
-    public Object getCrystal() {
+    public String getCrystal() {
         return crystal;
     }
 
     @JsonProperty("crystal")
-    public void setCrystal(Object crystal) {
+    public void setCrystal(String crystal) {
         this.crystal = crystal;
     }
 
