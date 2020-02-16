@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import skaro.pokeflex.api.IFlexObject;
+import skaro.pokeflex.objects.ability.Name;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -95,5 +96,16 @@ public class BerryFlavor implements IFlexObject {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+    
+	public String getNameInLanguage(String lang)
+	{
+		for(Name nm : this.names)
+		{
+			if(nm.getLanguage().getName().equals(lang))
+				return nm.getName();
+		}
+		
+		return name;
+	}
 
 }

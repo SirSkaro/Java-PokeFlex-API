@@ -28,6 +28,7 @@ import skaro.pokeflex.objects.move_category.MoveCategory;
 import skaro.pokeflex.objects.move_damage_class.MoveDamageClass;
 import skaro.pokeflex.objects.move_learn_method.MoveLearnMethod;
 import skaro.pokeflex.objects.move_target.MoveTarget;
+import skaro.pokeflex.objects.nature.Nature;
 import skaro.pokeflex.objects.pokedex.Pokedex;
 import skaro.pokeflex.objects.pokemon.Pokemon;
 import skaro.pokeflex.objects.pokemon_color.PokemonColor;
@@ -72,6 +73,7 @@ public enum Endpoint
 	MOVE_DAMAGE_CLASS(MoveDamageClass.class, "move-damage-class"),
 	MOVE_LEARN_METHOD(MoveLearnMethod.class, "move-learn-method"),
 	MOVE_TARGET(MoveTarget.class, "move-target"),
+	NATURE(Nature.class, "nature"),
 	POKEDEX(Pokedex.class, "pokedex"),
 	POKEMON(Pokemon.class, "pokemon"),
 	POKEMON_COLOR(PokemonColor.class, "pokemon-color"),
