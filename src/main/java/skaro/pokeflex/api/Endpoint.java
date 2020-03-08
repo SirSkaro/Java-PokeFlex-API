@@ -4,6 +4,8 @@ import skaro.pokeflex.objects.ability.Ability;
 import skaro.pokeflex.objects.berry.Berry;
 import skaro.pokeflex.objects.berry_firmness.BerryFirmness;
 import skaro.pokeflex.objects.berry_flavor.BerryFlavor;
+import skaro.pokeflex.objects.card.Card;
+import skaro.pokeflex.objects.card.Cards;
 import skaro.pokeflex.objects.contest_effect.ContestEffect;
 import skaro.pokeflex.objects.contest_type.ContestType;
 import skaro.pokeflex.objects.egg_group.EggGroup;
@@ -49,6 +51,8 @@ public enum Endpoint
 	BERRY(Berry.class, "berry"),
 	BERRY_FIRMNESS(BerryFirmness.class, "berry-firmness"),
 	BERRY_FLAVOR(BerryFlavor.class, "berry-flavor"),
+	CARD(Card.class, "cards"),
+	CARDS(Cards.class, "cards"),
 	CONTEST_EFFECT(ContestEffect.class, "contest-effect"),
 	CONTEST_TYPE(ContestType.class, "contest-type"),
 	EGG_GROUP(EggGroup.class, "egg-group"),

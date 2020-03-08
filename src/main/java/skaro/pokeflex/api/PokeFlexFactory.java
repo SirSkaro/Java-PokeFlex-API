@@ -10,7 +10,9 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 
@@ -34,24 +36,19 @@ public class PokeFlexFactory
 
 	public Mono<IFlexObject> createFlexObject(Endpoint endpoint, List<String> params) 
 	{
-		Class<?> wrapperClass = endpoint.getWrapperClass();
-
 		return Mono.justOrEmpty(constructURL(endpoint.getEnpoint(), params))
-			.map(url -> {
-				try { return getJSONFromURL(url); }
-				catch (IOException e) { throw Exceptions.propagate(e); }
-			})
-			.map(json -> {
-				try { return mapper.readValue(json, wrapperClass); }
-				catch (IOException e) { throw Exceptions.propagate(e); }
-			})
-			.map(jsonPOJO -> (IFlexObject)jsonPOJO);
+			.map(url -> makeRequest(endpoint, url));
 	}
 	
 	public Mono<IFlexObject> createFlexObject(String url, Endpoint endpoint) 
 	{
 		List<String> params = getURLParams(url, endpoint);
 		return createFlexObject(endpoint, params);
+	}
+	
+	public Mono<IFlexObject> createFlexObject(Endpoint endpoint, Map<String, String> params) {
+		return Mono.just(constructUrlWithQuery(endpoint.getEnpoint(), params))
+				.map(url -> makeRequest(endpoint, url));
 	}
 	
 	public Mono<IFlexObject> createFlexObject(Request request) 
@@ -77,6 +74,20 @@ public class PokeFlexFactory
 				.runOn(scheduler)
 				.flatMap(request -> request.makeRequest(PokeFlexFactory.this))
 				.sequential();
+	}
+	
+	private IFlexObject makeRequest(Endpoint endpoint, URL url) 
+	{
+		Class<?> wrapperClass = endpoint.getWrapperClass();
+		
+		try 
+		{
+			String json = getJSONFromURL(url);
+			return (IFlexObject)mapper.readValue(json, wrapperClass); 
+		} 
+		catch(IOException e) {
+			throw Exceptions.propagate(e);
+		}
 	}
 	
 	private Optional<URL> constructURL(String endpoint, List<String> args)
@@ -110,6 +121,25 @@ public class PokeFlexFactory
 		}
 
 		return result;
+	}
+	
+	private URL constructUrlWithQuery(String endpoint, Map<String, String> params) 
+	{
+		String queries = params.entrySet().stream()
+			.map(entry -> String.format("%s=%s", entry.getKey(), entry.getValue()))
+			.collect(Collectors.joining("&"));
+
+		StringBuilder builder = new StringBuilder(baseURI);
+		builder.append("?").append(queries);
+		
+		try 
+		{
+			return new URL(builder.toString());
+		} 
+		catch (MalformedURLException e) 
+		{
+			throw Exceptions.propagate(e);
+		}
 	}
 
 	private String getJSONFromURL(URL url) throws IOException
