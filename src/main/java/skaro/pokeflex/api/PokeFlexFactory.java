@@ -130,6 +130,7 @@ public class PokeFlexFactory
 			.collect(Collectors.joining("&"));
 
 		StringBuilder builder = new StringBuilder(baseURI);
+		builder.append("/").append(endpoint);
 		builder.append("?").append(queries);
 		
 		try 

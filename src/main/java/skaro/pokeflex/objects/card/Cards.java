@@ -13,15 +13,15 @@ import skaro.pokeflex.api.IFlexObject;
 })
 public class Cards implements IFlexObject {
 	@JsonProperty("cards")
-	private List<Card> cards = null;
+	private List<Card_> cards = null;
 
 	@JsonProperty("cards")
-	public List<Card> getCards() {
+	public List<Card_> getCards() {
 		return cards;
 	}
 
 	@JsonProperty("cards")
-	public void setCards(List<Card> cards) {
+	public void setCards(List<Card_> cards) {
 		this.cards = cards;
 	}
 }
